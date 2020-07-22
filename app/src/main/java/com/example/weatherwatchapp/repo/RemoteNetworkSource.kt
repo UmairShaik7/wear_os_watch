@@ -1,7 +1,10 @@
 package com.example.weatherwatchapp.repo
 
-class RemoteNetworkSource (val service: ServicesAPI){
-    fun getItem():String {
-       return "abc"
+import com.example.weatherwatchapp.repo.data.WeatherAPIData
+import retrofit2.Response
+
+class RemoteNetworkSource(private val service: ServicesAPI) {
+    suspend fun getWeather(cityCode:Int): Response<WeatherAPIData> {
+        return service.getLatestMovies(cityCode)
     }
 }
