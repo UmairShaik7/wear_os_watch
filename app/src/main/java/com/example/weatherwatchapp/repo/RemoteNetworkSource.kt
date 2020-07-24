@@ -5,6 +5,6 @@ import retrofit2.Response
 
 class RemoteNetworkSource(private val service: ServicesAPI) {
     suspend fun getWeather(cityCode:Int): Response<WeatherAPIData> {
-        return service.getLatestMovies(cityCode)
+        return service.getWeatherNetwork(cityCode)
     }
 }

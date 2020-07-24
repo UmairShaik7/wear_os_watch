@@ -8,5 +8,5 @@ import retrofit2.http.Query
 interface ServicesAPI {
 
     @GET("data/2.5/weather")
-    suspend fun getLatestMovies(@Query("id") cityCode: Int): Response<WeatherAPIData>
+    suspend fun getWeatherNetwork(@Query("id") cityCode: Int): Response<WeatherAPIData>
 }
