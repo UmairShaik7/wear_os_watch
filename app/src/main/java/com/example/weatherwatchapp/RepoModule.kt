@@ -1,8 +1,8 @@
 package com.example.weatherwatchapp
 
-import com.example.weatherwatchapp.repo.MainRepository
 import com.example.weatherwatchapp.repo.RemoteNetworkSource
 import com.example.weatherwatchapp.repo.ServicesAPI
+import com.example.weatherwatchapp.repo.WeatherRepository
 import com.google.gson.Gson
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
@@ -23,7 +23,7 @@ val repoModule = module {
     single { getOkHTTPBuilder(get(), get()) }
     single { getRetrofit(get(), Gson()) }
     single { RemoteNetworkSource(createWebService<ServicesAPI>(get())) }
-    single { MainRepository(get()) }
+    single { WeatherRepository(get()) }
 }
 
 inline fun <reified T> createWebService(retrofit: Retrofit): T = retrofit.create(T::class.java)
