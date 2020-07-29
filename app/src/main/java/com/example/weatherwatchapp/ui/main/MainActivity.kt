@@ -1,0 +1,24 @@
+package com.example.weatherwatchapp.ui.main
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
+import com.example.weatherwatchapp.R
+import com.example.weatherwatchapp.databinding.ActivityMainBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
+
+class MainActivity : AppCompatActivity() {
+    private lateinit var viewBinding: ActivityMainBinding
+    private val mainActivityViewModel: MainActivityViewModel by viewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        viewBinding.viewmodel = mainActivityViewModel
+        mainActivityViewModel.fetchWeather(CityCode.HYDERABAD.cityCode)
+        mainActivityViewModel.weatherValue.observe(this, Observer {
+            viewBinding.titleTemplate.text=it.main.temp.toString()
+        })
+    }
+}
