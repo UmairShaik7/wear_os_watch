@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">WeatherWatchApp</string>
+    <string name="bangalore">Bangalore</string>
+    <string name="hyderabad">HYDERABAD</string>
+    <string name="weather_result_hint">Weather Result</string>
+    <string name="temp">Temperature :</string>
+    <string name="weather_result">%1$s &#xb0;C , %2$s</string>
 </resources>
