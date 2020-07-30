@@ -23,7 +23,7 @@
 
         <Button
             android:id="@+id/bFirstRegion"
-            style="@style/TextAppearance.Region.Button"
+            style="@style/TextAppearance.Region.Button.One"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_border"
@@ -35,7 +35,7 @@
 
         <Button
             android:id="@+id/bSecondRegion"
-            style="@style/TextAppearance.Region.Button"
+            style="@style/TextAppearance.Region.Button.Two"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_border"
@@ -48,7 +48,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="@dimen/button_padding"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -62,11 +62,13 @@
                 android:layout_weight="3"
                 android:gravity="start"
                 android:text="@string/temp"
+                android:textColor="@color/gray"
                 android:textSize="18sp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
                 android:layout_weight="2"
                 android:gravity="start|center_vertical">
 
@@ -82,9 +84,10 @@
 
                 <ProgressBar
                     android:id="@+id/progressBar"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
+                    android:indeterminateTint="@android:color/white"
                     android:indeterminate="true"
                     android:indeterminateOnly="true"
                     android:visibility="gone" />

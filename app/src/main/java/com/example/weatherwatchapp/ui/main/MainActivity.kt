@@ -2,12 +2,12 @@ package com.example.weatherwatchapp.ui.main
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.example.weatherwatchapp.R
 import com.example.weatherwatchapp.databinding.ActivityMainBinding
+import kotlinx.android.synthetic.main.activity_main.progressBar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
 
         viewBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewBinding.viewmodel = mainActivityViewModel
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
 
         viewBinding.bFirstRegion.setOnClickListener {
             progressBar?.visibility = View.VISIBLE
@@ -34,10 +33,10 @@ class MainActivity : AppCompatActivity() {
         mainActivityViewModel.weatherValue.observe(this, Observer {
             progressBar?.visibility = View.GONE
 
-            viewBinding.tvWeatherResult.text = baseContext.getString(
-                R.string.weather_result, it.main.temp.toString(), it.weather?.get(
-                    index = 0
-                )?.main.toString()
+            viewBinding.tvWeatherResult.text = getString(
+                R.string.weather_result,
+                it.main.temp.toString(),
+                it.weather?.firstOrNull()?.main.toString()
             )
         })
     }
