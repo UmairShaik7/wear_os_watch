@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <corners android:radius="@dimen/button_border_radius" />
+            <stroke
+                android:width="2dp"
+                android:color="@android:color/white" />
+        </shape>
+    </item>
+    <item>
+        <shape>
+            <corners android:radius="@dimen/button_border_radius" />
+            <gradient
+                android:angle="90"
+                android:centerColor="#021B79"
+                android:endColor="#021B79"
+                android:startColor="#0575E6" />
+        </shape>
+    </item>
+</layer-list>

@@ -5,4 +5,7 @@
     <string name="weather_result_hint">Weather Result</string>
     <string name="temp">Temperature :</string>
     <string name="weather_result">%1$s &#xb0;C , %2$s</string>
+    <string name="notification_message"><![CDATA[You are currently in <b>%1$s</b> and the current Temperature is <b>%2$s &#xb0;C</b>]]></string>
+    <string name="notification_action">View Location on Map</string>
+    <string name="weather_notification_title"><![CDATA[<b><font color=#3700B3>Weather Notification</font></b>]]></string>
 </resources>
