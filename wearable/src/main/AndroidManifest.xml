@@ -10,16 +10,15 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/weather_logo"
         android:supportsRtl="true"
         android:theme="@android:style/Theme.DeviceDefault">
         <meta-data
             android:name="com.google.android.wearable.standalone"
             android:value="false" />
 
-
         <activity
-            android:name=".MainActivity"
+            android:name=".WearableActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

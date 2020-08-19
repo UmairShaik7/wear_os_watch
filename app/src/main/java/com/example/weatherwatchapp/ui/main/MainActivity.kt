@@ -1,10 +1,20 @@
 package com.example.weatherwatchapp.ui.main
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.annotation.WorkerThread
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
+import androidx.core.text.HtmlCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
@@ -18,7 +28,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.Locale
 import java.util.concurrent.ExecutionException
+import kotlin.collections.HashSet
 
 class MainActivity : AppCompatActivity() {
 
@@ -40,22 +52,51 @@ class MainActivity : AppCompatActivity() {
         viewBinding.bFirstRegion.setOnClickListener {
             viewBinding.progressBar.visibility = View.VISIBLE
             mainActivityViewModel.fetchWeather(CityCode.BANGALORE.cityCode)
+            mainActivityViewModel.selectedCity.value = CityCode.BANGALORE.toString()
         }
 
         viewBinding.bSecondRegion.setOnClickListener {
             viewBinding.progressBar.visibility = View.VISIBLE
             mainActivityViewModel.fetchWeather(CityCode.HYDERABAD.cityCode)
+            mainActivityViewModel.selectedCity.value = CityCode.HYDERABAD.toString()
         }
 
         mainActivityViewModel.weatherValue.observe(this, Observer {
             viewBinding.progressBar.visibility = View.GONE
-
             viewBinding.tvWeatherResult.text = getString(
                 R.string.weather_result,
                 it.main.temp.toString(),
                 it.weather?.firstOrNull()?.main.toString()
             )
             weatherData = it.main.temp.toString()
+
+            val tempRange: String?
+            // TODO After UI discussion
+            if (it.main.temp in 27.0F..28.0F) {
+                tempRange = "sunny_day.json"
+            } else {
+                tempRange = "raining.json"
+            }
+            viewBinding.lottieWeatherAnimation.apply {
+                setAnimation(tempRange)
+                playAnimation()
+            }
+            if (mainActivityViewModel.selectedCity.value == CityCode.BANGALORE.toString()) {
+                notifyWeather(
+                    CityCode.BANGALORE.toString(),
+                    CityCode.BANGALORE.latitude,
+                    CityCode.BANGALORE.longitude,
+                    it.main.temp.toString()
+                )
+            } else {
+                notifyWeather(
+                    CityCode.HYDERABAD.toString(),
+                    CityCode.HYDERABAD.latitude,
+                    CityCode.HYDERABAD.longitude,
+                    it.main.temp.toString()
+                )
+            }
+
             lifecycleScope.launch {
                 startNodes()
             }
@@ -113,5 +154,72 @@ class MainActivity : AppCompatActivity() {
                 "Interrupt occurred: $exception"
             )
         }
+    }
+
+    private fun notifyWeather(
+        city: String,
+        latitude: Float,
+        longitude: Float,
+        temperature: String
+    ) {
+
+        val builder =
+            NotificationCompat.Builder(applicationContext, "notify")
+        val uri: String =
+            java.lang.String.format(Locale.ENGLISH, "geo:%f,%f", latitude, longitude)
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, 0)
+
+        val bigText = NotificationCompat.BigTextStyle()
+        bigText.bigText(
+            HtmlCompat.fromHtml(
+                getString(
+                    R.string.notification_message,
+                    city,
+                    temperature
+                ), HtmlCompat.FROM_HTML_MODE_COMPACT
+            )
+        )
+
+        builder.setContentIntent(pendingIntent)
+        builder.setSmallIcon(R.drawable.map_icon)
+        builder.setContentTitle(
+            HtmlCompat.fromHtml(
+                "<font color=\"" + ContextCompat.getColor(
+                    baseContext,
+                    R.color.royal_blue
+                ) + "\">" + getString(R.string.weather_notification_title) + "</font>",
+                HtmlCompat.FROM_HTML_MODE_COMPACT
+            )
+        )
+        builder.setStyle(bigText)
+        builder.addAction(
+            R.drawable.map_icon,
+            HtmlCompat.fromHtml(
+                "<font color=\"" + ContextCompat.getColor(
+                    baseContext,
+                    R.color.royal_blue
+                ) + "\">" + getString(R.string.notification_action) + "</font>",
+                HtmlCompat.FROM_HTML_MODE_LEGACY
+            ),
+            pendingIntent
+        )
+        builder.setAutoCancel(true)
+
+        val notificationManager =
+            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channelId = "notify"
+            val channel = NotificationChannel(
+                channelId,
+                "Channel",
+                NotificationManager.IMPORTANCE_HIGH
+            )
+            notificationManager.createNotificationChannel(channel)
+            builder.setChannelId(channelId)
+        }
+
+        notificationManager.notify(0, builder.build())
     }
 }

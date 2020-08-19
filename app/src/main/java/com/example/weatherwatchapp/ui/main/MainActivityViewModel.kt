@@ -14,6 +14,8 @@ class MainActivityViewModel(private val repo: WeatherRepository) : ViewModel() {
 
     val weatherValue: LiveData<WeatherAPIData> = _weatherValue
 
+    val selectedCity = MutableLiveData<String>()
+
     fun fetchWeather(cityCode: Int) {
         viewModelScope.launch {
             val result = repo.getWeather(cityCode)
@@ -24,7 +26,7 @@ class MainActivityViewModel(private val repo: WeatherRepository) : ViewModel() {
     }
 }
 
-enum class CityCode(val cityCode: Int){
-    HYDERABAD(1269843),
-    BANGALORE(1277333)
+enum class CityCode(val cityCode: Int, val latitude: Float, val longitude: Float){
+    HYDERABAD(1269843, 17.3850f, 78.4867f),
+    BANGALORE(1277333, 12.9716f, 77.5946f)
 }

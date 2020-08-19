@@ -5,20 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="2dp"
-    tools:context=".MainActivity"
+    tools:context=".WatchActivity"
     tools:deviceIds="wear">
 
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/watch_bg"
         android:padding="2dp">
 
         <TextView
-            android:layout_gravity="center"
-            android:id="@+id/text"
+            android:id="@+id/temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="helloworld" />
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="0 &#xb0;C" />
 
-    </FrameLayout>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieWeatherAnimation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/temperature"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="weather_default_anim.json"
+            app:lottie_loop="true"
+            app:lottie_speed="1" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.wear.widget.BoxInsetLayout>

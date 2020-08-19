@@ -15,5 +15,6 @@
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="app_name">Data Layer Sample Wearable App</string>
+    <string name="app_name">Wearable App</string>
+    <string name="temperature">%1$s &#xb0;C</string>
 </resources>
