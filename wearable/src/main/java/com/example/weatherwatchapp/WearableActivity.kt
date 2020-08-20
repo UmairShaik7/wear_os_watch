@@ -29,18 +29,23 @@ class WearableActivity : FragmentActivity(), OnMessageReceivedListener{
     override fun onMessageReceived(event: MessageEvent) {
         temperature.text= getString(R.string.temperature, String(event.data))
 
-        // TODO After UI discussion
-        if (String(event.data) in "20".."22") {
-            lottieWeatherAnimation.apply {
-                setAnimation("sunny_day.json")
-                playAnimation()
+        val tempRange = when {
+            String(event.data) in "0".."20" -> {
+                "partly_cloudy.json"
             }
-        } else {
-            lottieWeatherAnimation.apply {
-                setAnimation("raining.json")
-                playAnimation()
+            String(event.data) in "20".."25" -> {
+                "raining.json"
+            }
+            else -> {
+                "sunny_day.json"
             }
         }
+
+        lottieWeatherAnimation.apply {
+            setAnimation(tempRange)
+            playAnimation()
+        }
+
         Toast.makeText(this,"Received",Toast.LENGTH_SHORT).show()
     }
 }

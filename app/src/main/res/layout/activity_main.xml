@@ -23,7 +23,7 @@
 
         <Button
             android:id="@+id/bFirstRegion"
-            style="@style/TextAppearance.Region.Button.One"
+            style="@style/TextAppearance.Region.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_border"
@@ -35,12 +35,12 @@
 
         <Button
             android:id="@+id/bSecondRegion"
-            style="@style/TextAppearance.Region.Button.Two"
+            style="@style/TextAppearance.Region.Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/button_border"
             android:padding="@dimen/button_padding"
-            android:text="@string/hyderabad"
+            android:text="@string/chennai"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/bFirstRegion"
             app:layout_constraintTop_toTopOf="parent" />

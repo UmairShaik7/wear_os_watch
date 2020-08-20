@@ -57,8 +57,8 @@ class MainActivity : AppCompatActivity() {
 
         viewBinding.bSecondRegion.setOnClickListener {
             viewBinding.progressBar.visibility = View.VISIBLE
-            mainActivityViewModel.fetchWeather(CityCode.HYDERABAD.cityCode)
-            mainActivityViewModel.selectedCity.value = CityCode.HYDERABAD.toString()
+            mainActivityViewModel.fetchWeather(CityCode.CHENNAI.cityCode)
+            mainActivityViewModel.selectedCity.value = CityCode.CHENNAI.toString()
         }
 
         mainActivityViewModel.weatherValue.observe(this, Observer {
@@ -70,12 +70,16 @@ class MainActivity : AppCompatActivity() {
             )
             weatherData = it.main.temp.toString()
 
-            val tempRange: String?
-            // TODO After UI discussion
-            if (it.main.temp in 27.0F..28.0F) {
-                tempRange = "sunny_day.json"
-            } else {
-                tempRange = "raining.json"
+            val tempRange = when (it.main.temp) {
+                in 0.0F..20.0F -> {
+                    "partly_cloudy.json"
+                }
+                in 20.0F..25.0F -> {
+                    "raining.json"
+                }
+                else -> {
+                    "sunny_day.json"
+                }
             }
             viewBinding.lottieWeatherAnimation.apply {
                 setAnimation(tempRange)
@@ -90,9 +94,9 @@ class MainActivity : AppCompatActivity() {
                 )
             } else {
                 notifyWeather(
-                    CityCode.HYDERABAD.toString(),
-                    CityCode.HYDERABAD.latitude,
-                    CityCode.HYDERABAD.longitude,
+                    CityCode.CHENNAI.toString(),
+                    CityCode.CHENNAI.latitude,
+                    CityCode.CHENNAI.longitude,
                     it.main.temp.toString()
                 )
             }

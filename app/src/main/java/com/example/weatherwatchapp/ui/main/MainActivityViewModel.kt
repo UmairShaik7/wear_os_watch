@@ -27,6 +27,6 @@ class MainActivityViewModel(private val repo: WeatherRepository) : ViewModel() {
 }
 
 enum class CityCode(val cityCode: Int, val latitude: Float, val longitude: Float){
-    HYDERABAD(1269843, 17.3850f, 78.4867f),
+    CHENNAI(1264527, 17.3850f, 78.4867f),
     BANGALORE(1277333, 12.9716f, 77.5946f)
 }
