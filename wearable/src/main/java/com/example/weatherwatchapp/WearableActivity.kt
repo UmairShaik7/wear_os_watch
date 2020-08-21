@@ -26,15 +26,16 @@ class WearableActivity : FragmentActivity(), OnMessageReceivedListener{
         Wearable.getMessageClient(this).removeListener(this)
     }
 
+    //Receiving Message from Companion Phone device
     override fun onMessageReceived(event: MessageEvent) {
         temperature.text= getString(R.string.temperature, String(event.data))
 
         val tempRange = when {
             String(event.data) in "0".."20" -> {
-                "partly_cloudy.json"
-            }
-            String(event.data) in "20".."25" -> {
                 "raining.json"
+            }
+            String(event.data) in "20".."30" -> {
+                "partly_cloudy.json"
             }
             else -> {
                 "sunny_day.json"

@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
             mainActivityViewModel.selectedCity.value = CityCode.CHENNAI.toString()
         }
 
+        // Observing weather result
         mainActivityViewModel.weatherValue.observe(this, Observer {
             viewBinding.progressBar.visibility = View.GONE
             viewBinding.tvWeatherResult.text = getString(
@@ -68,14 +69,15 @@ class MainActivity : AppCompatActivity() {
                 it.main.temp.toString(),
                 it.weather?.firstOrNull()?.main.toString()
             )
+            // This data is sent to the Watch App in the form of a message via Message Client API
             weatherData = it.main.temp.toString()
 
             val tempRange = when (it.main.temp) {
                 in 0.0F..20.0F -> {
-                    "partly_cloudy.json"
-                }
-                in 20.0F..25.0F -> {
                     "raining.json"
+                }
+                in 20.0F..30.0F -> {
+                    "partly_cloudy.json"
                 }
                 else -> {
                     "sunny_day.json"
